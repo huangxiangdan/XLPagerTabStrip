@@ -85,7 +85,7 @@ public class ButtonBarPagerTabStripViewController: PagerTabStripViewController, 
         var flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .Horizontal
         let buttonBarHeight = self.settings.style.buttonBarHeight ?? 44
-        let buttonBar = ButtonBarView(frame: CGRectMake(0, 0, 95, buttonBarHeight), collectionViewLayout: flowLayout)
+        let buttonBar = ButtonBarView(frame: CGRectMake(0, 0, 100, buttonBarHeight), collectionViewLayout: flowLayout)
 
         buttonBar.backgroundColor = .orangeColor()
         buttonBar.selectedBar.backgroundColor = .blackColor()
@@ -134,7 +134,7 @@ public class ButtonBarPagerTabStripViewController: PagerTabStripViewController, 
         let sectionInset = flowLayout.sectionInset
 //        flowLayout.sectionInset = UIEdgeInsetsMake(sectionInset.top, self.settings.style.buttonBarLeftContentInset ?? sectionInset.left, sectionInset.bottom, self.settings.style.buttonBarRightContentInset ?? sectionInset.right)
         
-        flowLayout.sectionInset = UIEdgeInsetsMake(0, 2, 0, 2)
+        flowLayout.sectionInset = UIEdgeInsetsMake(0, 3, 0, 3)
 
 
         buttonBarView.showsHorizontalScrollIndicator = false
@@ -249,7 +249,7 @@ public class ButtonBarPagerTabStripViewController: PagerTabStripViewController, 
         guard let cellWidthValue = cachedCellWidths?[indexPath.row] else {
             fatalError("cachedCellWidths for \(indexPath.row) must not be nil")
         }
-        return CGSizeMake(cellWidthValue, 30)
+        return CGSizeMake(cellWidthValue+5, 30)
     }
     
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
