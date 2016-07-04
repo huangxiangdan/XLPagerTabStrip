@@ -85,7 +85,8 @@ public class ButtonBarPagerTabStripViewController: PagerTabStripViewController, 
         var flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .Horizontal
         let buttonBarHeight = self.settings.style.buttonBarHeight ?? 44
-        let buttonBar = ButtonBarView(frame: CGRectMake(0, 0, self.view.frame.size.width, buttonBarHeight), collectionViewLayout: flowLayout)
+        let buttonBar = ButtonBarView(frame: CGRectMake(0, 0, 100, buttonBarHeight), collectionViewLayout: flowLayout)
+
         buttonBar.backgroundColor = .orangeColor()
         buttonBar.selectedBar.backgroundColor = .blackColor()
         buttonBar.autoresizingMask = .FlexibleWidth
@@ -133,7 +134,7 @@ public class ButtonBarPagerTabStripViewController: PagerTabStripViewController, 
         let sectionInset = flowLayout.sectionInset
 //        flowLayout.sectionInset = UIEdgeInsetsMake(sectionInset.top, self.settings.style.buttonBarLeftContentInset ?? sectionInset.left, sectionInset.bottom, self.settings.style.buttonBarRightContentInset ?? sectionInset.right)
         
-        flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        flowLayout.sectionInset = UIEdgeInsetsMake(0, 3, 0, 3)
 
 
         buttonBarView.showsHorizontalScrollIndicator = false
@@ -180,11 +181,12 @@ public class ButtonBarPagerTabStripViewController: PagerTabStripViewController, 
         // tab/cell may end up either skewed or off screen after a rotation otherwise)
         buttonBarView.moveToIndex(currentIndex, animated: false, swipeDirection: .None, pagerScroll: .ScrollOnlyIfOutOfScreen)
         
-        buttonBarView.frame.size.height = 35.0
+        buttonBarView.frame.size.height = 30
 
         buttonBarView.layer.cornerRadius = buttonBarView.frame.size.height * 0.5
         buttonBarView.layer.borderWidth = 1.0
         buttonBarView.layer.masksToBounds = true
+//        buttonBarView.contentInset = UIEdgeInsetsMake(0, 2, 0, 2)
 
     }
     
@@ -247,7 +249,7 @@ public class ButtonBarPagerTabStripViewController: PagerTabStripViewController, 
         guard let cellWidthValue = cachedCellWidths?[indexPath.row] else {
             fatalError("cachedCellWidths for \(indexPath.row) must not be nil")
         }
-        return CGSizeMake(cellWidthValue, 35)
+        return CGSizeMake(cellWidthValue+5, 30)
     }
     
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -285,7 +287,7 @@ public class ButtonBarPagerTabStripViewController: PagerTabStripViewController, 
         let indicatorInfo = childController.indicatorInfoForPagerTabStrip(self)
         
         cell.label.text = indicatorInfo.title
-        cell.label.font = UIFont.systemFontOfSize(15)
+        cell.label.font = UIFont.systemFontOfSize(13)
         cell.label.textColor = settings.style.buttonBarItemTitleColor ?? cell.label.textColor
         cell.contentView.backgroundColor = settings.style.buttonBarItemBackgroundColor ?? cell.contentView.backgroundColor
         cell.backgroundColor = settings.style.buttonBarItemBackgroundColor ?? cell.backgroundColor
@@ -304,8 +306,11 @@ public class ButtonBarPagerTabStripViewController: PagerTabStripViewController, 
                 buttonBarView.frame.size.height = 35
                 buttonBarView.layer.borderColor = UIColor(red: 142/255.0, green: 32/255.0, blue: 243/255.0, alpha: 1.0).CGColor
                 buttonBarView.layer.borderWidth = 1.0
+                buttonBarView.layer.cornerRadius = buttonBarView.frame.height * 0.5
                 buttonBarView.layer.masksToBounds = true
                 
+//                buttonBarView.contentInset = UIEdgeInsetsMake(0, 2, 0, 2)
+
                 buttonBarView.center.y = 53.0 * 0.5
 
                 changeCurrentIndexProgressive(oldCell: currentIndex == indexPath.item ? nil : cell, newCell: currentIndex == indexPath.item ? cell : nil, progressPercentage: 1, changeCurrentIndex: true, animated: false)
@@ -323,6 +328,8 @@ public class ButtonBarPagerTabStripViewController: PagerTabStripViewController, 
     
     public override func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
         super.scrollViewDidEndScrollingAnimation(scrollView)
+        
+        
         
         guard scrollView == containerView else { return }
         shouldUpdateButtonBarView = true
